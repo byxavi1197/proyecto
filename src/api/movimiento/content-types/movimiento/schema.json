@@ -1,0 +1,58 @@
+{
+  "kind": "collectionType",
+  "collectionName": "movimientos",
+  "info": {
+    "singularName": "movimiento",
+    "pluralName": "movimientos",
+    "displayName": "Movimiento"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "entrada",
+        "salida"
+      ]
+    },
+    "motivo": {
+      "type": "enumeration",
+      "enum": [
+        "venta",
+        "consumo interno",
+        "merma"
+      ]
+    },
+    "quantity": {
+      "type": "integer",
+      "required": true
+    },
+    "comprobante": {
+      "type": "string"
+    },
+    "area": {
+      "type": "string"
+    },
+    "observation": {
+      "type": "string"
+    },
+    "date": {
+      "type": "datetime"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "movimientos"
+    },
+    "producto": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::producto.producto",
+      "inversedBy": "movimientos"
+    }
+  }
+}
