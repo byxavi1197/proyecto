@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Ferretería Martinez</title>
+  <link rel="stylesheet" href="css/inicio.css">
+
+</head>
+
+<body>
+  <div class="container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <span class="logo-icon">🔧</span>
+          <span class="logo-text">Ferretería Martinez</span>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+
+
+
+        <a href="inicio.html" class="nav-item active">
+          <span class="nav-icon">📊</span>
+          Dashboard
+        </a>
+        <a href="inventario.html" class="nav-item">
+          <span class="nav-icon">📦</span>
+          Inventario
+        </a>
+
+        <button class="action-btn" onclick="window.location.href='inventario.html'"></button>
+
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <header class="main-header">
+        <div class="header-left">
+          <h1>Dashboard</h1>
+          <p class="header-subtitle">Bienvenido al panel de control</p>
+
+
+          <!-- CODIGO VIEJO *************************** -->
+           <!-- ************ 
+        </div>
+        <div class="header-right">
+          <div class="date-display" id="currentDate"></div>
+          <div class="user-info">
+            <span class="user-avatar">👤</span>
+            <span class="user-name">Administrador</span>
+          </div>
+        </div>
+      </header>
+      **************************** -->
+      <!-- CODIGO NUEVO *************************** -->
+      <div class="header-right">
+    <div class="date-display" id="currentDate"></div>
+
+    <!-- Menú de usuario -->
+    <div class="user-menu">
+        <button class="user-menu-toggle" id="userMenuToggle">
+            <span class="user-avatar" id="userAvatar">👤</span>
+            <div class="user-meta">
+                <span class="user-name" id="userName">Usuario</span>
+                <span class="user-role" id="userRole">Rol</span>
+            </div>
+            <span class="user-menu-arrow">▾</span>
+        </button>
+
+        <div class="user-menu-dropdown" id="userMenuDropdown">
+            <div class="user-menu-header">
+                <span class="user-name" id="dropdownUserName">Usuario</span>
+                <span class="user-role" id="dropdownUserRole">Rol</span>
+            </div>
+            <!-- Aquí puedes agregar más opciones si quieres -->
+            <button class="user-menu-item" id="logoutButton">Cerrar sesión</button>
+        </div>
+    </div>
+</div>
+
+
+
+
+      <!-- Stats Cards -->
+      <section class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon ventas">💰</div>
+          <div class="stat-info">
+            <h3>Ventas del Día</h3>
+            <p class="stat-value" id="ventasDia">$0</p>
+            <span class="stat-change positive">+12% vs ayer</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon productos">📦</div>
+          <div class="stat-info">
+            <h3>Productos Vendidos</h3>
+            <p class="stat-value" id="productosVendidos">0</p>
+            <span class="stat-change positive">+8% vs ayer</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon clientes">👥</div>
+          <div class="stat-info">
+            <h3>Clientes Atendidos</h3>
+            <p class="stat-value" id="clientesAtendidos">0</p>
+            <span class="stat-change positive">+5% vs ayer</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon alertas">⚠️</div>
+          <div class="stat-info">
+            <h3>Stock Bajo</h3>
+            <p class="stat-value" id="stockBajo">0</p>
+            <span class="stat-change negative">Requiere atención</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Charts Section -->
+      <section class="charts-section">
+        <div class="chart-card">
+          <div class="chart-header">
+            <h3>Ventas de la Semana</h3>
+            <select id="chartPeriod" class="chart-select">
+              <option value="semana">Esta Semana</option>
+              <option value="mes">Este Mes</option>
+              <option value="año">Este Año</option>
+            </select>
+          </div>
+          <div class="chart-container">
+            <canvas id="salesChart"></canvas>
+          </div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-header">
+            <h3>Ventas por Categoría</h3>
+          </div>
+          <div class="chart-container">
+            <canvas id="categoryChart"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tables Section -->
+      <section class="tables-section">
+        <div class="table-card">
+          <div class="table-header">
+            <h3>Últimas Ventas</h3>
+            <a href="#" class="view-all">Ver todas</a>
+          </div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Total</th>
+                <th>Hora</th>
+              </tr>
+            </thead>
+            <tbody id="salesTableBody">
+            </tbody>
+          </table>
+        </div>
+        <div class="table-card">
+          <div class="table-header">
+            <h3>Productos con Stock Bajo</h3>
+            <a href="index.html" class="view-all">Ir a inventario</a>
+          </div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Producto</th>
+                <th>Categoría</th>
+                <th>Stock</th>
+                <th>Estado</th>
+              </tr>
+            </thead>
+            <tbody id="lowStockTableBody">
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Quick Actions -->
+      <section class="quick-actions">
+        <h3>Acciones Rápidas</h3>
+        <div class="actions-grid">
+          <button class="action-btn" onclick="window.location.href='index.html'">
+            <span class="action-icon">➕</span>
+            <span>Agregar Producto</span>
+          </button>
+          <button class="action-btn">
+            <span class="action-icon">🧾</span>
+            <span>Nueva Venta</span>
+          </button>
+          <button class="action-btn">
+            <span class="action-icon">📄</span>
+            <span>Generar Reporte</span>
+          </button>
+          <button class="action-btn">
+            <span class="action-icon">📥</span>
+            <span>Registrar Compra</span>
+          </button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="js/inicio.js"></script>
+</body>
+
+</html>

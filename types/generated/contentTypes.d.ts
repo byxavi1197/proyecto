@@ -442,6 +442,7 @@ export interface ApiMovimientoMovimiento extends Struct.CollectionTypeSchema {
   };
   attributes: {
     area: Schema.Attribute.String;
+    cantidad: Schema.Attribute.Integer & Schema.Attribute.Required;
     comprobante: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -457,7 +458,6 @@ export interface ApiMovimientoMovimiento extends Struct.CollectionTypeSchema {
     observation: Schema.Attribute.String;
     producto: Schema.Attribute.Relation<'manyToOne', 'api::producto.producto'>;
     publishedAt: Schema.Attribute.DateTime;
-    quantity: Schema.Attribute.Integer & Schema.Attribute.Required;
     type: Schema.Attribute.Enumeration<['entrada', 'salida']>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -480,12 +480,19 @@ export interface ApiProductoProducto extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    category: Schema.Attribute.Enumeration<
-      ['herramientras', 'tornillos', 'pinturas']
+    cantidad: Schema.Attribute.Integer;
+    categoria: Schema.Attribute.Enumeration<
+      [
+        'herramientras manuales',
+        'herramientras electricas',
+        'tornilleria',
+        'pintura',
+        'plomeria',
+        'electricidad',
+        'jardineria',
+        'construccion',
+      ]
     >;
-    code: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.Unique;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -501,9 +508,11 @@ export interface ApiProductoProducto extends Struct.CollectionTypeSchema {
       'api::movimiento.movimiento'
     >;
     name: Schema.Attribute.String & Schema.Attribute.Required;
-    price: Schema.Attribute.Decimal;
+    precio: Schema.Attribute.Decimal;
     publishedAt: Schema.Attribute.DateTime;
-    quantity: Schema.Attribute.Integer;
+    SKU: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
     stockMin: Schema.Attribute.Integer;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &

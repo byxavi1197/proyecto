@@ -1,0 +1,252 @@
+<!--<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ferretería Martinez - Sistema de Inventario</title>
+  <link rel="stylesheet" href="css/styles.css">
+  
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🔧 Ferretería Martinez</h1>
+      <p>Sistema de Gestión de Inventario</p>
+    </header>
+
+    <div class="stats-grid">
+      <div class="stat-card orange">
+        <h3>Total Productos</h3>
+        <p class="value" id="totalProducts">0</p>
+      </div>
+      <div class="stat-card green">
+        <h3>En Stock</h3>
+        <p class="value" id="inStock">0</p>
+      </div>
+      <div class="stat-card red">
+        <h3>Stock Bajo</h3>
+        <p class="value" id="lowStock">0</p>
+      </div>
+      <div class="stat-card blue">
+        <h3>Valor Total</h3>
+        <p class="value" id="totalValue">$0</p>
+      </div>
+    </div>
+
+    <div class="controls">
+      <div class="search-box">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.35-4.35"></path>
+        </svg>
+        <input type="text" id="searchInput" placeholder="Buscar productos...">
+      </div>
+      <select class="category-filter" id="categoryFilter">
+        <option value="">Todas las categorías</option>
+      </select>
+      <button class="btn btn-primary" onclick="openModal()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 5v14M5 12h14"></path>
+        </svg>
+        Agregar Producto
+      </button>
+    </div>
+
+    <div class="products-grid" id="productsGrid"></div>
+    <div class="empty-state" id="emptyState" style="display: none;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+      </svg>
+      <p>No se encontraron productos</p>
+    </div>
+  </div>
+
+   Modal 
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="modalTitle">Agregar Producto</h2>
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="productForm">
+          <input type="hidden" id="productId">
+          <div class="form-group">
+            <label for="productName">Nombre del Producto</label>
+            <input type="text" id="productName" required placeholder="Ej: Martillo de Carpintero">
+          </div>
+          <div class="form-group">
+            <label for="productSku">SKU</label>
+            <input type="text" id="productSku" required placeholder="Ej: HM-001">
+          </div>
+          <div class="form-group">
+            <label for="productCategory">Categoría</label>
+            <select id="productCategory" required></select>
+          </div>
+          <div class="form-group">
+            <label for="productPrice">Precio ($)</label>
+            <input type="number" id="productPrice" required min="0" step="0.01" placeholder="0.00">
+          </div>
+          <div class="form-group">
+            <label for="productMinStock">Stock Mínimo</label>
+            <input type="number" id="productMinStock" required min="0" placeholder="10">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal()">Cancelar</button>
+        <button class="btn btn-primary" onclick="saveProduct()">Guardar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/inventario.js"></script>
+  
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ferretería Martinez - Sistema de Inventario</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🔧 Ferretería Martinez</h1>
+      <p>Sistema de Gestión de Inventario</p>
+    </header>
+
+    <div class="stats-grid">
+      <div class="stat-card orange">
+        <h3>Total Productos</h3>
+        <p class="value" id="totalProducts">0</p>
+      </div>
+      <div class="stat-card green">
+        <h3>En Stock</h3>
+        <p class="value" id="inStock">0</p>
+      </div>
+      <div class="stat-card red">
+        <h3>Stock Bajo</h3>
+        <p class="value" id="lowStock">0</p>
+      </div>
+      <div class="stat-card blue">
+        <h3>Valor Total</h3>
+        <p class="value" id="totalValue">$0</p>
+      </div>
+    </div>
+
+    <div class="controls">
+      <div class="search-box">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.35-4.35"></path>
+        </svg>
+        <input type="text" id="searchInput" placeholder="Buscar productos...">
+      </div>
+      <select class="category-filter" id="categoryFilter">
+        <option value="">Todas las categorías</option>
+      </select>
+      <button class="btn btn-primary" onclick="openModal()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 5v14M5 12h14"></path>
+        </svg>
+        Agregar Producto
+      </button>
+    </div>
+
+    <!-- 👇🏽 NUEVA SECCIÓN: tabla con los atributos pedidos -->
+    <section class="inventory-table">
+      <h2>Listado de productos</h2>
+      <div class="table-wrapper">
+        <table class="products-table">
+          <thead>
+            <tr>
+              <th>SKU</th>
+              <th>Nombre</th>
+              <th>Categoría</th>
+              <th>Cantidad</th>
+              <th>Precio</th>
+              <th>Stock mín.</th>
+              <th>Descripción</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="productsTableBody">
+            <!-- Las filas se rellenan desde JS en base a SKU, name, categoría, cantidad, precio, stockmin, description -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Si quieres, puedes dejar también la vista de tarjetas -->
+    <div class="products-grid" id="productsGrid"></div>
+
+    <div class="empty-state" id="emptyState" style="display: none;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+      </svg>
+      <p>No se encontraron productos</p>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="modalTitle">Agregar Producto</h2>
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="productForm">
+          <input type="hidden" id="productId">
+
+          <div class="form-group">
+            <label for="productSku">SKU</label>
+            <input type="text" id="productSku" required placeholder="Ej: HM-001">
+          </div>
+
+          <div class="form-group">
+            <label for="productName">Nombre del Producto</label>
+            <input type="text" id="productName" required placeholder="Ej: Martillo de Carpintero">
+          </div>
+
+          <div class="form-group">
+            <label for="productCategory">Categoría</label>
+            <select id="productCategory" required></select>
+          </div>
+
+          <div class="form-group">
+            <label for="productStock">Cantidad</label>
+            <input type="number" id="productStock" required min="0" placeholder="0">
+          </div>
+
+          <div class="form-group">
+            <label for="productPrice">Precio ($)</label>
+            <input type="number" id="productPrice" required min="0" step="0.01" placeholder="0.00">
+          </div>
+
+          <div class="form-group">
+            <label for="productMinStock">Stock Mínimo</label>
+            <input type="number" id="productMinStock" required min="0" placeholder="10">
+          </div>
+
+          <div class="form-group">
+            <label for="productDescription">Descripción</label>
+            <textarea id="productDescription" rows="3" placeholder="Ej: Martillo de acero con mango de goma."></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal()">Cancelar</button>
+        <button class="btn btn-primary" onclick="saveProduct()">Guardar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/inventario.js"></script>
+</body>
+</html>

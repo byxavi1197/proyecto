@@ -11,7 +11,7 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "code": {
+    "SKU": {
       "type": "string",
       "required": true,
       "unique": true
@@ -20,18 +20,23 @@
       "type": "string",
       "required": true
     },
-    "category": {
+    "categoria": {
       "type": "enumeration",
       "enum": [
-        "herramientras",
-        "tornillos",
-        "pinturas"
+        "herramientras manuales",
+        "herramientras electricas",
+        "tornilleria",
+        "pintura",
+        "plomeria",
+        "electricidad",
+        "jardineria",
+        "construccion"
       ]
     },
-    "quantity": {
+    "cantidad": {
       "type": "integer"
     },
-    "price": {
+    "precio": {
       "type": "decimal"
     },
     "stockMin": {
