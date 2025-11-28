@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   populateCategorySelects()
-  loadProductsFromStrapi() // Nueva función para cargar productos desde Strapi
+  loadProductsFromStrapi()
   updateStats()
 
   document.getElementById("searchInput").addEventListener("input", renderProducts)
@@ -203,7 +203,7 @@ function openModal(product = null) {
     document.getElementById("productId").value = product.id
     document.getElementById("productName").value = product.name
     document.getElementById("productSku").value = product.sku
-    document.getElementById("productCategory").value = product.category
+    // document.getElementById("productCategory").value = product.category
     document.getElementById("productPrice").value = product.price
     document.getElementById("productStock").value = product.stock
     document.getElementById("productMinStock").value = product.minStock
@@ -219,7 +219,6 @@ function closeModal() {
   document.getElementById("modalOverlay").classList.remove("active")
 }
 
-
 // Guardar producto - VERSIÓN CORREGIDA
 async function saveProduct() {
   const form = document.getElementById("productForm")
@@ -232,14 +231,21 @@ async function saveProduct() {
   const productData = {
     data: {
       name: document.getElementById("productName").value,
-      stockMin: Number.parseInt(document.getElementById("productMinStock").value) || 10,
-      description: document.getElementById("productDescription").value || '',
-      // Campos que pueden ser null en tu Strapi
       SKU: document.getElementById("productSku").value || null,
-      categoria: document.getElementById("productCategory").value || null,
-      cantidad: Number.parseInt(document.getElementById("productStock").value) || null,
-      precio: Number.parseFloat(document.getElementById("productPrice").value) || null,
+      // categoria: document.getElementById("productCategory").value || null,
+      precio: document.getElementById("productPrice").value ? 
+        Number.parseFloat(document.getElementById("productPrice").value) : null,
+      cantidad: document.getElementById("productStock").value ? 
+        Number.parseInt(document.getElementById("productStock").value) : null,
+      stockMin: Number.parseInt(document.getElementById("productMinStock").value) || 10,
+      description: document.getElementById("productDescription").value || ''
     }
+  }
+
+  // Validar que al menos los campos requeridos estén presentes
+  if (!productData.data.name) {
+    alert('El nombre del producto es requerido');
+    return;
   }
 
   try {
@@ -270,15 +276,18 @@ async function saveProduct() {
     if (!response.ok) {
       const errorData = await response.json();
       console.error('Error del servidor:', errorData);
-      throw new Error('Error al guardar producto');
+      throw new Error(`Error al guardar producto: ${errorData.error?.message || 'Error desconocido'}`);
     }
 
+    const result = await response.json();
+    console.log('Producto guardado:', result);
+    
     closeModal()
     await loadProductsFromStrapi()
     
   } catch (error) {
     console.error('Error:', error);
-    alert('Error al guardar el producto. Revisa la consola para más detalles.');
+    alert(`Error al guardar el producto: ${error.message}`);
   }
 }
 
@@ -303,13 +312,20 @@ async function deleteProduct(id) {
     });
 
     if (!response.ok) {
-      throw new Error('Error al eliminar producto');
+      const errorData = await response.json();
+      throw new Error(`Error al eliminar producto: ${errorData.error?.message || 'Error desconocido'}`);
     }
 
     await loadProductsFromStrapi()
     
   } catch (error) {
     console.error('Error:', error);
-    alert('Error al eliminar el producto');
+    alert(`Error al eliminar el producto: ${error.message}`);
   }
+}
+
+// Función para cerrar sesión
+function logout() {
+  localStorage.removeItem("jwt");
+  window.location.href = "login.html";
 }
